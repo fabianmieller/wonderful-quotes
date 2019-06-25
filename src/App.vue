@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container">
+    <StatusBar :quotesLength=quotes.length :maxQuotes=maxQuotes />
+    <AddQuote :quotesLength=quotes.length :maxQuotes=maxQuotes @added-quote="addQuote" />
+    <ListQuotes :quotes=quotes @deleted-quote="deleteQuote" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import StatusBar from './components/StatusBar.vue';
+import AddQuote from './components/AddQuote.vue';
+import ListQuotes from './components/ListQuotes.vue';
 
 export default {
   name: 'app',
+  data() {
+    return {
+      quotes: [
+        'A quote',
+      ],
+      maxQuotes: 7,
+    };
+  },
+  methods: {
+    addQuote(quote) {
+      console.log('added');
+      this.quotes.push(quote);
+    },
+    deleteQuote(index) {
+      console.log('deleted');
+      this.quotes.splice(index, 1);
+    },
+  },
   components: {
-    HelloWorld,
+    StatusBar,
+    AddQuote,
+    ListQuotes,
   },
 };
 </script>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
